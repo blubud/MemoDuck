@@ -1,8 +1,10 @@
-package me.lkhz.memoduck;
+package me.lkhz.memoduck.main;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import me.lkhz.memoduck.R;
 
 public class MainActivity extends AppCompatActivity {
 
