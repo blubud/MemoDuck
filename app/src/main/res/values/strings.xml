@@ -2,5 +2,7 @@
     <string name="app_name">메모 오리</string>
     <string name="copy_right">made by 이경훈</string>
     <string name="loadnig_string">Loading...</string>
+    <string name="add">ADD</string>
+    <string name="delete">DELETE</string>
 
 </resources>
