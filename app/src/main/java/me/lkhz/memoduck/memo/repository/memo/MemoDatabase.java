@@ -1,4 +1,4 @@
-package me.lkhz.memoduck.memo.repository.lcoal;
+package me.lkhz.memoduck.memo.repository.memo;
 
 
 import android.content.Context;
@@ -10,8 +10,6 @@ import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
-
-import me.lkhz.memoduck.memo.repository.MemoItem;
 
 @Database(entities = {MemoItem.class}, version = 3, exportSchema = false)
 public abstract class MemoDatabase extends RoomDatabase {

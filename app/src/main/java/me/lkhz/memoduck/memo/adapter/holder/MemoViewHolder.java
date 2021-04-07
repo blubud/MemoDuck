@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.listener.OnListItemClickListener;
-import me.lkhz.memoduck.memo.repository.MemoItem;
+import me.lkhz.memoduck.memo.repository.memo.MemoItem;
 
 public class MemoViewHolder extends RecyclerView.ViewHolder {
 
@@ -27,7 +27,7 @@ public class MemoViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBind(final MemoItem item, final int position){
-        titleTextView.setText(item.getTitle());
+        titleTextView.setText(item.getFullContent());
 
         container.setOnClickListener(new View.OnClickListener(){
             @Override

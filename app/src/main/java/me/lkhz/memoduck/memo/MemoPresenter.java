@@ -1,8 +1,12 @@
 package me.lkhz.memoduck.memo;
 
+import java.util.ArrayList;
+
 import me.lkhz.memoduck.listener.OnListItemClickListener;
 import me.lkhz.memoduck.memo.adapter.MemoAdapterContract;
 import me.lkhz.memoduck.memo.repository.MemoRepository;
+import me.lkhz.memoduck.memo.repository.MemoSource;
+import me.lkhz.memoduck.memo.repository.memo.MemoItem;
 
 public class MemoPresenter implements MemoContract.Presenter, OnListItemClickListener {
 
@@ -25,8 +29,10 @@ public class MemoPresenter implements MemoContract.Presenter, OnListItemClickLis
     @Override
     public void loadMemoItems() {
         // Repository 에서 가져오기
-        adapterModel.addItems(memoRepository.getMemoItems());
-        adapterView.notifyAdapter();
+        memoRepository.getMemoItems(alarmList -> {
+            adapterModel.addItems(alarmList);
+            adapterView.notifyAdapter();
+        });
     }
 
     @Override

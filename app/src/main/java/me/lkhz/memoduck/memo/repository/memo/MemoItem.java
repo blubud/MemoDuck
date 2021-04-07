@@ -1,4 +1,4 @@
-package me.lkhz.memoduck.memo.repository;
+package me.lkhz.memoduck.memo.repository.memo;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -13,19 +13,10 @@ public class MemoItem {
     private String memoId;
 
     @NonNull
-    @ColumnInfo(name="title")
-    private String title;
-
-    @NonNull
     @ColumnInfo(name="content")
     private String fullContent;
 
     public MemoItem(String memoId, String fullContent){
-
-        if(fullContent.length() <= 20)
-            this.title = fullContent;
-        else
-            this.title = fullContent.substring(0, 20);
 
         this.memoId = memoId;
         this.fullContent = fullContent;
@@ -47,11 +38,4 @@ public class MemoItem {
         this.fullContent = fullContent;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

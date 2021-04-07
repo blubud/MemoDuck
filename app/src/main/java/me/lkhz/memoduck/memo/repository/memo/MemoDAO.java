@@ -1,4 +1,4 @@
-package me.lkhz.memoduck.memo.repository.lcoal;
+package me.lkhz.memoduck.memo.repository.memo;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
-
-import me.lkhz.memoduck.memo.repository.MemoItem;
 
 @Dao
 public interface MemoDAO {

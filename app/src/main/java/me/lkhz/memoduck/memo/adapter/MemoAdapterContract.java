@@ -1,10 +1,9 @@
 package me.lkhz.memoduck.memo.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.lkhz.memoduck.listener.OnListItemClickListener;
-import me.lkhz.memoduck.memo.repository.MemoItem;
+import me.lkhz.memoduck.memo.repository.memo.MemoItem;
 
 public interface MemoAdapterContract {
     interface View{

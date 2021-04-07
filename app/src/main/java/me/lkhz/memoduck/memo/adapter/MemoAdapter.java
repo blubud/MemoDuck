@@ -13,7 +13,7 @@ import java.util.List;
 import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.listener.OnListItemClickListener;
 import me.lkhz.memoduck.memo.adapter.holder.MemoViewHolder;
-import me.lkhz.memoduck.memo.repository.MemoItem;
+import me.lkhz.memoduck.memo.repository.memo.MemoItem;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoViewHolder> implements MemoAdapterContract.Model, MemoAdapterContract.View{
 
