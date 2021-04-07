@@ -11,5 +11,7 @@ public interface MemoSource {
     }
 
     void getMemoItems(LoadAlarmCallback callback);
-
+    void insertMemoItem(MemoItem memoItem);
+    void updateMemoItem(MemoItem memoItem);
+    void deleteMemo(String id);
 }

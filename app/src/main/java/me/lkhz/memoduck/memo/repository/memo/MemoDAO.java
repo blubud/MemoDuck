@@ -14,5 +14,12 @@ public interface MemoDAO {
     void insertMemo(MemoItem item);
 
     @Query("SELECT * FROM memo ORDER BY id")
-    List<MemoItem> getMemo();
+    List<MemoItem> selectAllMemo();
+
+    @Query("UPDATE memo SET content = :content WHERE id = :memoId")
+    void updateMemo(String memoId, String content);
+
+    @Query("DELETE FROM memo WHERE id = :id")
+    void deleteMemo(String id);
+
 }

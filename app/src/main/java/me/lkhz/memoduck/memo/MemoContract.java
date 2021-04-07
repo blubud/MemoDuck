@@ -6,7 +6,7 @@ import me.lkhz.memoduck.memo.repository.MemoRepository;
 public interface MemoContract {
 
     interface View{
-
+        void update();
     }
 
     interface Presenter{

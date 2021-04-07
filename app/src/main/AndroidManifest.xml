@@ -10,12 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MemoDuck">
         <activity
+            android:name=".add.AddMemoActivity"
+            android:theme="@style/splash_theme"></activity>
+        <activity
             android:name=".splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/splash_theme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".main.MainActivity">

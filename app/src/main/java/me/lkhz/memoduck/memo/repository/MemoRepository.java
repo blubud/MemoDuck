@@ -1,35 +1,66 @@
 package me.lkhz.memoduck.memo.repository;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.lkhz.memoduck.memo.repository.memo.MemoDAO;
 import me.lkhz.memoduck.memo.repository.memo.MemoItem;
+import me.lkhz.memoduck.util.AppExecutor;
 
 public class MemoRepository implements MemoSource {
 
+    private MemoDAO memoDao;
+    private AppExecutor appExecutor;
+
     private static MemoRepository INSTANCE = null;
-    private MemoRepository(){
+    private MemoRepository(MemoDAO memoDao, AppExecutor appExecutor){
+        this.memoDao = memoDao;
+        this.appExecutor = appExecutor;
     }
 
-    public static void makeInstance(){
+    public static void makeInstance(MemoDAO memoDao){
         if(INSTANCE == null){
-            INSTANCE = new MemoRepository();
+            synchronized (MemoRepository.class){
+                if(INSTANCE == null){
+                    INSTANCE = new MemoRepository(memoDao, new AppExecutor());
+                }
+            }
         }
     }
     public static MemoRepository getInstance(){
-        if(INSTANCE == null){
-            makeInstance();
-        }
         return INSTANCE;
     }
 
     @Override
     public void getMemoItems(LoadAlarmCallback callback) {
+        Runnable runnable = () -> {
+            final List<MemoItem> tmpItems = memoDao.selectAllMemo();
+            ArrayList<MemoItem> items = new ArrayList<>(tmpItems);
 
-        List<MemoItem> result = new ArrayList<>();
-        result.add(new MemoItem("20210403-0000", "테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111테스트111111111111111111111111111111111111111111111111111111111111111"));
-        result.add(new MemoItem("20210403-0001", "22222222222222222222222222222222222222222222222222222222222222222222222"));
-        result.add(new MemoItem("20210403-0002", "33333333333333333333333333333333333333333333333"));
-        result.add(new MemoItem("20210403-0003", "444444444"));
+            if(items.isEmpty()){
+                items = new ArrayList<>();
+            }
+            callback.onLoadAlarm(items);
+        };
+        appExecutor.diskIO().execute(runnable);
+    }
+
+    @Override
+    public void insertMemoItem(MemoItem memoItem) {
+        Runnable runnable = () -> memoDao.insertMemo(memoItem);
+        appExecutor.diskIO().execute(runnable);
+    }
+
+    @Override
+    public void updateMemoItem(MemoItem memoItem) {
+        Runnable runnable = () -> memoDao.updateMemo(memoItem.getMemoId(), memoItem.getFullContent());
+        appExecutor.diskIO().execute(runnable);
+    }
+
+    @Override
+    public void deleteMemo(String id) {
+        Runnable runnable = () -> memoDao.deleteMemo(id);
+        appExecutor.diskIO().execute(runnable);
     }
 }

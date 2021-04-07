@@ -1,5 +1,7 @@
 package me.lkhz.memoduck.memo.adapter;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,9 @@ import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.listener.OnListItemClickListener;
 import me.lkhz.memoduck.memo.adapter.holder.MemoViewHolder;
 import me.lkhz.memoduck.memo.repository.memo.MemoItem;
+import me.lkhz.memoduck.util.AppExecutor;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoViewHolder> implements MemoAdapterContract.Model, MemoAdapterContract.View{
-
     private List<MemoItem> memoItems = new ArrayList<>();
     private OnListItemClickListener onListItemClickListener;
 

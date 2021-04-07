@@ -3,15 +3,11 @@ package me.lkhz.memoduck.memo.repository.memo;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-@Database(entities = {MemoItem.class}, version = 3, exportSchema = false)
+@Database(entities = {MemoItem.class}, version = 1, exportSchema = false)
 public abstract class MemoDatabase extends RoomDatabase {
     private static MemoDatabase INSTANCE;
 
@@ -29,21 +25,5 @@ public abstract class MemoDatabase extends RoomDatabase {
             }
             return INSTANCE;
         }
-    }
-    @NonNull
-    @Override
-    protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration config) {
-        return null;
-    }
-
-    @NonNull
-    @Override
-    protected InvalidationTracker createInvalidationTracker() {
-        return null;
-    }
-
-    @Override
-    public void clearAllTables() {
-
     }
 }

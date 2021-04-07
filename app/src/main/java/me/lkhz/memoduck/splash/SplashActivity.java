@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.main.MainActivity;
+import me.lkhz.memoduck.memo.repository.MemoRepository;
+import me.lkhz.memoduck.memo.repository.memo.MemoDatabase;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -28,17 +30,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
+                    MemoRepository.makeInstance(MemoDatabase.getInstance(getApplicationContext()).memoDAO());
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
                     if(init(intent)){
                         progressBar.setVisibility(View.INVISIBLE);
                         startActivity(intent);
-                        finish();
                     }
-                    else{
-                        // 데이터 못받아왔을때
-                    }
+                    finish();
 
                 } catch (Exception e) {
                     e.printStackTrace();

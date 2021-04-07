@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.memo.adapter.MemoAdapter;
 import me.lkhz.memoduck.memo.repository.MemoRepository;
+import me.lkhz.memoduck.util.AppExecutor;
 
 public class MemoFragment extends Fragment implements MemoContract.View {
 
@@ -56,5 +57,10 @@ public class MemoFragment extends Fragment implements MemoContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         memoPresenter.detachView();
+    }
+
+    @Override
+    public void update() {
+        recyclerView.post(memoPresenter::loadMemoItems);
     }
 }
