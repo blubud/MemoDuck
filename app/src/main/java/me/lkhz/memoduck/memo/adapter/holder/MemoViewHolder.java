@@ -29,18 +29,8 @@ public class MemoViewHolder extends RecyclerView.ViewHolder {
     public void onBind(final MemoItem item, final int position){
         titleTextView.setText(item.getFullContent());
 
-        container.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                onItemClickListener.onItemClickWithId(item.getMemoId());
-            }
-        });
+        container.setOnClickListener(view -> onItemClickListener.onItemClickWithPosition(position));
 
-        deleteImageView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                onItemClickListener.onDeleteClickWithId(item.getMemoId());
-            }
-        });
+        deleteImageView.setOnClickListener(view -> onItemClickListener.onDeleteClickWithPosition(position));
     }
 }

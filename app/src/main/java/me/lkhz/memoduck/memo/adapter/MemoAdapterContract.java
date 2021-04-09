@@ -13,8 +13,6 @@ public interface MemoAdapterContract {
 
     interface Model{
         void addItems(List<MemoItem> items);
-        void refreshItems(List<MemoItem> items);
-        void addItem(MemoItem item);
-        void editItem(MemoItem item);
+        MemoItem getItem(int position);
     }
 }

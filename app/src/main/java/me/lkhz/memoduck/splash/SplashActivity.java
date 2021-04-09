@@ -11,6 +11,7 @@ import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.main.MainActivity;
 import me.lkhz.memoduck.memo.repository.MemoRepository;
 import me.lkhz.memoduck.memo.repository.memo.MemoDatabase;
+import me.lkhz.memoduck.util.AppExecutor;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
                 try{
                     Thread.sleep(1000);
                     MemoRepository.makeInstance(MemoDatabase.getInstance(getApplicationContext()).memoDAO());
+                    AppExecutor.makeInstance();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
                     if(init(intent)){

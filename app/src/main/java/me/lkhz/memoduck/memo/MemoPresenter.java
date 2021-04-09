@@ -1,15 +1,9 @@
 package me.lkhz.memoduck.memo;
 
-import android.os.Handler;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import me.lkhz.memoduck.listener.OnListItemClickListener;
+import me.lkhz.memoduck.main.MainInterface;
 import me.lkhz.memoduck.memo.adapter.MemoAdapterContract;
 import me.lkhz.memoduck.memo.repository.MemoRepository;
-import me.lkhz.memoduck.memo.repository.MemoSource;
-import me.lkhz.memoduck.memo.repository.memo.MemoDAO;
 import me.lkhz.memoduck.memo.repository.memo.MemoItem;
 
 public class MemoPresenter implements MemoContract.Presenter, OnListItemClickListener {
@@ -18,7 +12,9 @@ public class MemoPresenter implements MemoContract.Presenter, OnListItemClickLis
     private MemoAdapterContract.Model adapterModel;
     private MemoAdapterContract.View adapterView;
 
+    private MainInterface mainInterface;
     private MemoRepository memoRepository;
+
 
     @Override
     public void attachView(MemoContract.View view) {
@@ -58,11 +54,33 @@ public class MemoPresenter implements MemoContract.Presenter, OnListItemClickLis
     }
 
     @Override
-    public void onItemClickWithId(String listId) {
-
+    public void setMainInterface(MainInterface mainInterface) {
+        this.mainInterface = mainInterface;
     }
 
     @Override
-    public void onDeleteClickWithId(String listId) {
+    public void deleteMemo(int position) {
+        MemoItem param = this.adapterModel.getItem(position);
+        this.memoRepository.deleteMemo(param.getMemoId());
+        this.mainInterface.startMemoFragment();
     }
+
+    @Override
+    public void onItemClickWithPosition(int position) {
+        MemoItem param = this.adapterModel.getItem(position);
+        this.mainInterface.openAddActivityForEdit(param);
+    }
+
+    @Override
+    public void onDeleteClickWithPosition(int position){
+        mainInterface.popDeleteDialog(this, position);
+        /*
+        MemoItem param = this.adapterModel.getItem(position);
+        this.memoRepository.deleteMemo(param.getMemoId());
+        this.mainInterface.startMemoFragment();
+
+         */
+    }
+
+
 }

@@ -1,12 +1,11 @@
 package me.lkhz.memoduck.add;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ public class AddMemoActivity extends AppCompatActivity implements AddMemoContrac
     private EditText contentText;
     private String content;
     private String id;          // id: 수정 / N: 생성
-    private Button saveBtn;
 
     private AddMemoContract.Presenter addPresenter;
 
@@ -51,6 +49,13 @@ public class AddMemoActivity extends AppCompatActivity implements AddMemoContrac
     private void setView(){
         contentText = findViewById(R.id.et_memo_content);
         contentText.setText(content);
+        contentText.post(() -> {
+            contentText.setFocusableInTouchMode(true);
+            contentText.requestFocus();
+            contentText.setSelection(contentText.length());
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(contentText,0);
+        });
     }
 
     private void setPresenter(){
@@ -61,8 +66,6 @@ public class AddMemoActivity extends AppCompatActivity implements AddMemoContrac
 
     private void setBtnEvents(){
         findViewById(R.id.btn_cancel).setOnClickListener(view -> finish());
-
-
         findViewById(R.id.btn_save).setOnClickListener(view -> saveMemo());
     }
 

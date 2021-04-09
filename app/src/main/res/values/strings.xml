@@ -7,4 +7,5 @@
 
     <string name="cancel">취소</string>
     <string name="save">확인</string>
+    <string name="version">Version 1.0</string>
 </resources>

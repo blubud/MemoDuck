@@ -1,12 +1,12 @@
 package me.lkhz.memoduck.memo;
 
+import me.lkhz.memoduck.main.MainInterface;
 import me.lkhz.memoduck.memo.adapter.MemoAdapterContract;
 import me.lkhz.memoduck.memo.repository.MemoRepository;
 
 public interface MemoContract {
 
     interface View{
-        void update();
     }
 
     interface Presenter{
@@ -16,5 +16,7 @@ public interface MemoContract {
         void setMemoAdapterView(MemoAdapterContract.View adapterView);
         void setMemoAdapterModel(MemoAdapterContract.Model adapterModel);
         void setMemoRepository(MemoRepository memoRepository);
+        void setMainInterface(MainInterface mainInterface);
+        void deleteMemo(int position);
     }
 }
