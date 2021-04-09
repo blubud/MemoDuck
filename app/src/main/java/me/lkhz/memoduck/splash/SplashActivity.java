@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.biometric.BiometricPrompt.PromptInfo;
 
 import me.lkhz.memoduck.R;
 import me.lkhz.memoduck.main.MainActivity;
@@ -13,9 +18,13 @@ import me.lkhz.memoduck.memo.repository.MemoRepository;
 import me.lkhz.memoduck.memo.repository.memo.MemoDatabase;
 import me.lkhz.memoduck.util.AppExecutor;
 
+
 public class SplashActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+    private BiometricPrompt biometricPrompt;
+    private PromptInfo promptInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,91 +32,59 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         progressBar = findViewById(R.id.pb_loading);
-        download();
+        // Initialize Executor
+        AppExecutor.makeInstance();
+        MemoRepository.makeInstance(MemoDatabase.getInstance(getApplicationContext()).memoDAO());
+        findViewById(R.id.btn_auth).setOnClickListener(view -> {
+            start();
+        });
+        start();
     }
-
-    private void download(){
-        new Thread((new Runnable() {
+    private void start(){
+        biometricPrompt = new BiometricPrompt(this, AppExecutor.getInstance().mainThread(), new BiometricPrompt.AuthenticationCallback() {
             @Override
-            public void run() {
-                try{
-                    Thread.sleep(1000);
-                    MemoRepository.makeInstance(MemoDatabase.getInstance(getApplicationContext()).memoDAO());
-                    AppExecutor.makeInstance();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-                    if(init(intent)){
-                        progressBar.setVisibility(View.INVISIBLE);
-                        startActivity(intent);
-                    }
-                    finish();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(),
+                        "인증 에러", Toast.LENGTH_SHORT)
+                        .show();
             }
-        })).start();
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                goToMainActivity();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(),
+                        "인증 실패", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("지문 인증")
+                .setSubtitle("기기에 등록된 지문을 이용하여 인증해주세요.")
+                .setNegativeButtonText("취소")
+                .build();
+
+        biometricPrompt.authenticate(promptInfo);
     }
 
-    private boolean init(Intent intent){
 
-        // @TODO: 데이터 받아와서 intent 에 넣기
-
-        return true;
+    private void goToMainActivity(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
-/*
-    private class SplashAsyncTask extends AsyncTask<Void, Void, Integer> {
-        ProgressDialog asyncDialog = new ProgressDialog(SplashActivity.this);
 
-        @Override
-        protected void onPreExecute() {
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            asyncDialog.show();
-
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            if(asyncDialog.isShowing())
-                asyncDialog.dismiss();
-
-            try{
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            finish();
-
-            super.onPostExecute(integer);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
-        @Override
-        protected Integer doInBackground(Void... voids) {
-            try{
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return 0;
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressBar.setVisibility(View.INVISIBLE);
     }
-    */
+
 }

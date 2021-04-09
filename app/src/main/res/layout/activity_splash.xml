@@ -37,6 +37,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/btn_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:text="@string/auth"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_copy_right"/>
+
         <TextView
             android:id="@+id/tv_copy_right"
             android:layout_width="wrap_content"
